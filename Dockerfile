@@ -1,25 +1,27 @@
 FROM alpine:3.17
-RUN apk add --no-cache git make g++ bash
+RUN apk add --no-cache git make g++ bash autoconf automake libtool pkgconfig db-dev boost-dev openssl-dev libevent-dev
 
 RUN addgroup --gid 1000 aurora
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home /auroracoin \
-    --ingroup auroracoin \
+    --home /aurora \
+    --ingroup aurora \
     --uid 1000 \
     aurora
 
-USER auroracoin
+USER aurora
 RUN mkdir /aurora/.auroracoin
 VOLUME /aurora/.auroracoin
 
-RUN git clone https://github.com/auroracoinproject/auroracoin.git /aurora/auroracoin
+RUN git clone https://github.com/aurarad/Auroracoin.git /aurora/auroracoin
 WORKDIR /aurora/auroracoin
 RUN git checkout tags/2022.06.1.0
 
-WORKDIR /aurora/auroracoin/src
-RUN make -f makefile.unix
+WORKDIR /aurora/auroracoin/
+RUN ./autogen.sh
+RUN ./configure
+RUN make
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 12340/tcp

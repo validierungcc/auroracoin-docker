@@ -7,7 +7,7 @@ AURORACOIN_CONF=/aurora/.auroracoin/auroracoin.conf
 
 if [ -z "${AURORACOIN_RPCPASSWORD:-}" ]; then
   # Provide a random password.
-  AURORACOIN_RPCPASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c AURORACOINho '')
+  AURORACOIN_RPCPASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 24 ; echo '')
 fi
 
 if [ ! -e "${AURORACOIN_CONF}" ]; then
