@@ -1,4 +1,4 @@
-FROM alpine:3.17
+FROM alpine:3.17.3 AS builder
 RUN apk add --no-cache git make g++ bash autoconf automake libtool pkgconfig db-dev boost-dev openssl-dev libevent-dev
 
 RUN addgroup --gid 1000 aurora
@@ -19,8 +19,11 @@ WORKDIR /aurora/auroracoin
 RUN git checkout tags/2022.06.1.0
 
 WORKDIR /aurora/auroracoin/
+
+FROM builder AS compiler
+
 RUN ./autogen.sh
-RUN ./configure
+RUN ./configure --without-gui
 RUN make
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
