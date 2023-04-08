@@ -1,8 +1,8 @@
 **Auroracoin**
 
-https://github.com/validierungcc/eMark-docker
+https://github.com/validierungcc/auroracoin-docker
 
-https://deutsche-emark.org/
+https://auroracoin.is/
 
 
 Example docker-compose.yml
