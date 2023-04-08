@@ -1,24 +1,21 @@
-FROM alpine:3.17.3 AS builder
-RUN apk add --no-cache git make g++ bash autoconf automake libtool pkgconfig db-dev boost-dev openssl-dev libevent-dev
+FROM ubuntu:20.04 AS builder
 
-RUN addgroup --gid 1000 aurora
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home /aurora \
-    --ingroup aurora \
-    --uid 1000 \
-    aurora
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y git make g++ bash autoconf automake libtool pkg-config libdb++-dev libboost-all-dev libssl-dev libevent-dev bsdmainutils
+
+RUN addgroup --gid 1000 aurora && \
+    adduser --disabled-password --gecos "" --home /aurora --ingroup aurora --uid 1000 aurora
 
 USER aurora
-RUN mkdir /aurora/.auroracoin
+WORKDIR /aurora
+RUN mkdir .auroracoin
 VOLUME /aurora/.auroracoin
 
-RUN git clone https://github.com/aurarad/Auroracoin.git /aurora/auroracoin
+RUN git clone https://github.com/aurarad/Auroracoin.git auroracoin
 WORKDIR /aurora/auroracoin
 RUN git checkout tags/2022.06.1.0
-
-WORKDIR /aurora/auroracoin/
 
 FROM builder AS compiler
 
