@@ -21,7 +21,7 @@ echo "Created new configuration at ${AURORACOIN_CONF}"
 fi
 
 if [ $# -eq 0 ]; then
-  /aurora/auroracoin/src/auroracoind -rpcbind=0.0.0.0 -rpcport=12341 -rpcallowip=0.0.0.0/0 -printtoconsole=1
+  /usr/local/bin/auroracoind -rpcbind=0.0.0.0 -rpcport=12341 -rpcallowip=0.0.0.0/0 -printtoconsole=1
 else
   exec "$@"
 fi
