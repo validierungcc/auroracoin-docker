@@ -14,7 +14,6 @@ Example docker-compose.yml
             container_name: auroracoin
             image: vfvalidierung/auroracoin
             restart: unless-stopped
-            user: 1000:1000
             ports:
                 - '12340:12340'
                 - '127.0.0.1:12341:12341'

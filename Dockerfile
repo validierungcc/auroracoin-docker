@@ -16,10 +16,7 @@ RUN apt-get update && \
         libssl-dev \
         libevent-dev \
         ca-certificates \
-        bsdmainutils && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
+        bsdmainutils
 RUN addgroup --gid 1000 aurora && \
     adduser --disabled-password --gecos "" --home /aurora --ingroup aurora --uid 1000 aurora
 
