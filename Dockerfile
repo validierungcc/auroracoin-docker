@@ -27,11 +27,11 @@ VOLUME /aurora/.auroracoin
 
 RUN git clone https://github.com/aurarad/Auroracoin.git auroracoin
 WORKDIR /aurora/auroracoin
-RUN git checkout tags/2022.06.1.0
+RUN git checkout master
 
 RUN ./autogen.sh
 RUN ./configure --without-gui
-RUN make
+RUN make -j$(nproc)
 
 FROM ubuntu:22.04
 
